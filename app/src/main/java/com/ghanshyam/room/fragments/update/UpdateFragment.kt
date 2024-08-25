@@ -1,17 +1,19 @@
 package com.ghanshyam.room.fragments.update
 
+import android.app.AlertDialog
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.ghanshyam.room.R
@@ -45,6 +47,7 @@ class UpdateFragment : Fragment() {
         btn.setOnClickListener {
             update()
         }
+        setHasOptionsMenu(true)
 
         // Inflate the layout for this fragment
         return view
@@ -71,5 +74,34 @@ class UpdateFragment : Fragment() {
         ))
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.delete_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_delete) {
+            deleteUser()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteUser() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton("Yes") { _, _ ->
+            mUserViewModel.deleteUser(args.customUser)
+            Toast.makeText(
+                requireContext(),
+                "Successfully removed: ${args.customUser.firstName}",
+                Toast.LENGTH_SHORT
+            ).show()
+            findNavController().navigate(R.id.action_updateFragment_to_blankFragment)
+        }
+        builder.setNegativeButton("No") { _, _ ->
+
+        }
+        builder.setTitle("Delete ${args.customUser.firstName}?")
+        builder.setMessage("Are sure you want to delete ${args.customUser.firstName}")
+        builder.create().show()
+    }
 
 }
