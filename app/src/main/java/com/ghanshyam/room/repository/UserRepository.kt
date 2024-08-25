@@ -1,6 +1,8 @@
-package com.ghanshyam.room.data
+package com.ghanshyam.room.repository
 
 import androidx.lifecycle.LiveData
+import com.ghanshyam.room.data.UserDao
+import com.ghanshyam.room.model.User
 
 class UserRepository(private val userDao: UserDao) {
 
@@ -10,4 +12,7 @@ class UserRepository(private val userDao: UserDao) {
         userDao.addUser(user)
     }
 
+    suspend fun updateUser(user: User){
+        userDao.update(user)
+    }
 }

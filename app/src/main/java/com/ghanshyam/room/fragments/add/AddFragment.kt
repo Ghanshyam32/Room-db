@@ -13,9 +13,8 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ghanshyam.room.R
-import com.ghanshyam.room.data.User
-import com.ghanshyam.room.data.UserViewModel
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.ghanshyam.room.model.User
+import com.ghanshyam.room.viewmodel.UserViewModel
 
 class AddFragment : Fragment() {
 
@@ -31,9 +30,9 @@ class AddFragment : Fragment() {
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         val btn = view.findViewById<Button>(R.id.add_btn)
-        val fn = view.findViewById<EditText>(R.id.editTextText)
-        val ln = view.findViewById<EditText>(R.id.editTextText2)
-        val age = view.findViewById<EditText>(R.id.editTextText3)
+        val fn = view.findViewById<EditText>(R.id.updateFirstName)
+        val ln = view.findViewById<EditText>(R.id.updateLastName)
+        val age = view.findViewById<EditText>(R.id.updateAge)
 
         btn.setOnClickListener {
             insertDataToDb(fn, ln, age)
